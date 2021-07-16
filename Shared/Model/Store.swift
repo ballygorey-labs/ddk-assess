@@ -6,22 +6,47 @@
 //
 
 import Foundation
+import SwiftUI
 import StoreKit
 
 typealias FetchCompletionHandler = (([SKProduct]) -> Void)
 typealias PurchaseCompletionHandler = ((SKPaymentTransaction?) -> Void)
 
+extension Array: RawRepresentable where Element: Codable {
+    public init?(rawValue: String) {
+        guard let data = rawValue.data(using: .utf8),
+              let result = try? JSONDecoder().decode([Element].self, from: data)
+        else {
+            return nil
+        }
+        self = result
+    }
 
+    public var rawValue: String {
+        guard let data = try? JSONEncoder().encode(self),
+              let result = String(data: data, encoding: .utf8)
+        else {
+            return "[]"
+        }
+        return result
+    }
+}
 // MARK: - Store
 
 class Store : NSObject, ObservableObject {
     
-    @Published var supportProductOptions : [SKProduct] = []
+    var isSupporter : Bool {
+        return !completedPurchases.isEmpty
+    }
+    
+    @Published var productOptions : [SKProduct] = []
     
     private let allProductIdentifiers = Set([Store.donateDonutIdentifier, donateSmoothieIdentifier, donateLunchIdentifier])
     
-    private var completedPurchases = [String]()
-    private var fetchedProducts = [SKProduct]()
+    
+    @AppStorage("completed_purchases") private var completedPurchases : [String] = [] { didSet { print("Setting completed Purchases") } }
+    
+    private var fetchedProducts : [SKProduct] = []
     private var productsRequest: SKProductsRequest?
     private var fetchCompletionHandler: FetchCompletionHandler?
     private var purchaseCompletionHandler: PurchaseCompletionHandler?
@@ -29,14 +54,15 @@ class Store : NSObject, ObservableObject {
     override init() {
         super.init()
         startObservingPaymentQueue()
-
+                
         fetchProducts { [weak self] products in
             guard let self = self else { return }
-            self.supportProductOptions = products
+            self.productOptions = products
             print("\(products)")
 //            self.unlockAllRecipesProduct = products.first(where: { $0.productIdentifier == Store.unlockAllRecipesIdentifier })
         }
     }
+
 }
 
 // MARK: - Store API
@@ -80,6 +106,11 @@ extension Store {
 //            }
         }
     }
+    
+    func restoreProducts() {
+        print("Restoring products ...")
+        SKPaymentQueue.default().restoreCompletedTransactions()
+    }
 }
 
 // MARK: - Private Logic
@@ -121,10 +152,12 @@ extension Store {
 
 extension Store: SKPaymentTransactionObserver {
     func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
+        print("Starting Payment Queue")
         for transaction in transactions {
             var shouldFinishTransaction = false
             switch transaction.transactionState {
             case .purchased, .restored:
+                print("Adding to purchase array")
                 completedPurchases.append(transaction.payment.productIdentifier)
                 shouldFinishTransaction = true
             case .failed:
@@ -144,14 +177,14 @@ extension Store: SKPaymentTransactionObserver {
         }
     }
     
-    func paymentQueue(_ queue: SKPaymentQueue, didRevokeEntitlementsForProductIdentifiers productIdentifiers: [String]) {
-        completedPurchases.removeAll(where: { productIdentifiers.contains($0) })
-        DispatchQueue.main.async {
-//            if productIdentifiers.contains(Store.unlockAllRecipesIdentifier) {
-//                self.unlockedAllRecipes = false
-//            }
-        }
-    }
+//    func paymentQueue(_ queue: SKPaymentQueue, didRevokeEntitlementsForProductIdentifiers productIdentifiers: [String]) {
+//        completedPurchases.removeAll(where: { productIdentifiers.contains($0) })
+//        DispatchQueue.main.async {
+////            if productIdentifiers.contains(Store.unlockAllRecipesIdentifier) {
+////                self.unlockedAllRecipes = false
+////            }
+//        }
+//    }
 }
 
 
@@ -159,6 +192,7 @@ extension Store: SKPaymentTransactionObserver {
 
 extension Store: SKProductsRequestDelegate {
     func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
+        print("Did Receive Product Response")
         let loadedProducts = response.products
         let invalidProducts = response.invalidProductIdentifiers
         

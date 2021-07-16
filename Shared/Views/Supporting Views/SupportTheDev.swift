@@ -22,7 +22,7 @@ struct SupportTheDev: View {
             }
             
             HStack(spacing: 20) {
-                if !store.supportProductOptions.isEmpty {
+                if !store.productOptions.isEmpty {
                     Button {
                         store.purchaseProduct(product)
                     } label: {

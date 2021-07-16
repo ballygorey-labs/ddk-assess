@@ -61,9 +61,12 @@ struct SettingsScreen: View {
                 }.disabled(!MFMailComposeViewController.canSendMail())
             }
             
-            Section(header: Text("Support")) {
-                if !store.supportProductOptions.isEmpty {
-                    ForEach(store.supportProductOptions.sorted { $0.productIdentifier < $1.productIdentifier }, id: \.self) { product in
+            Section(
+                header: Text("Support"),
+                footer: Button("Restore Purchases", action: store.restoreProducts)
+            ) {
+                if !store.productOptions.isEmpty {
+                    ForEach(store.productOptions.sorted { $0.productIdentifier < $1.productIdentifier }, id: \.self) { product in
                         NavigationLink(destination: SupportTheDev(product: product)) {
                             Text("Buy the developer a \(product.localizedTitle) \(Store.getEmoji(id: product.productIdentifier))")
                                 .foregroundColor(.accentColor)

@@ -10,6 +10,7 @@ import SwiftUI
 struct AppSidebarNavigation: View {
 
     @EnvironmentObject var model : DDKModel
+    @EnvironmentObject var store : Store
     
     @State private var sidebarSelection : Set<NavigationItem> = [.assess]
     @State private var showSettingsModal : Bool = false
@@ -27,6 +28,13 @@ struct AppSidebarNavigation: View {
                 }
             #else
             HistoryScreen()
+                .toolbar {
+                    ToolbarItem(placement: ToolbarItemPlacement.bottomBar) {
+                        if store.isSupporter {
+                            Text("💜 DDK Supporter")
+                        }
+                    }
+                }
                 .sheet(isPresented: $showSettingsModal) {
                     SettingsModal()
                 }
