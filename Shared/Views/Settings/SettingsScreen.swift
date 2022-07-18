@@ -77,7 +77,7 @@ struct SettingsScreen: View {
                 }.disabled(!MFMailComposeViewController.canSendMail())
                 #else
                 Link(
-                    destination: URL(string: "mailto:apps@ballygorey.com?subject=Subject&body=Test")!,
+                    destination: URL(string: "mailto:collin@ballygorey.com?subject=Subject&body=Test")!,
                     label: {
                         SettingsScreenButton(
                             title: "Support / Feedback",
@@ -126,16 +126,24 @@ struct SettingsScreen: View {
                 NavigationLink(
                     destination: FavoriteAssesmentsOverview(),
                     label: {
-                        Label("Edit Favorites", systemImage: "star.fill")
-                            .accentColor(.yellow) // TODO: This will be deprecated
+                        Label {
+                            Text("Edit Favorites")
+                        } icon: {
+                            Image(systemName: "star.fill")
+                                .foregroundColor(.yellow)
+                        }
                     }
                 )
 
                 NavigationLink(
                     destination: Statistics(),
                     label: {
-                        Label("Statistics", systemImage: "sum")
-                            .accentColor(.orange)
+                        Label {
+                            Text("Statistics")
+                        } icon: {
+                            Image(systemName: "sum")
+                                .foregroundColor(.orange)
+                        }
                     }
                 )
             }

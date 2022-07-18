@@ -33,15 +33,15 @@ struct OnboardingOptions: View {
                             }
                             
                             print(product)
-                                                        
+                            
                         } label: {
                             ProductOption(option: product, selection: $selectedOption)
                                 .padding()
-                                #if !os(macOS)
+#if !os(macOS)
                                 .background(
                                     Color(.secondarySystemGroupedBackground)
                                 )
-                                #endif
+#endif
                                 .cornerRadius(10.0)
                                 .overlay(
                                     RoundedRectangle(cornerRadius: 10.0)
@@ -83,7 +83,9 @@ struct OnboardingOptions: View {
                     }
                 }
             }
+#if !os(macOS)
             .background(Color(.systemGroupedBackground).edgesIgnoringSafeArea(.all))
+#endif
         }
     }
     
@@ -100,7 +102,9 @@ struct OnboardingOptions: View {
             Text("Continue to Checkout \(Image(systemName: "chevron.forward"))")
                 .padding(4)
         }
+        #if !os(macOS)
         .buttonBorderShape(.capsule)
+        #endif
         .buttonStyle(.borderedProminent)
     }
     
@@ -108,7 +112,9 @@ struct OnboardingOptions: View {
         Button(
             "Redeem Code",
             action: {
+#if os(iOS)
                 SKPaymentQueue.default().presentCodeRedemptionSheet()
+#endif
             }
         )
     }

@@ -33,7 +33,7 @@ struct Diadochokinetic_AssessApp: App {
             ContentView()
         } else {
             #if os(macOS)
-                Text("Hello World!")
+                ContentView()
             #else
             Onboarding()
             #endif
