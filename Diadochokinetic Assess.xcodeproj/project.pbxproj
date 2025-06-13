@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -21,7 +21,6 @@
 		F00CE950288EDD09005D36A9 /* SupportDevelopment.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00CE94F288EDD09005D36A9 /* SupportDevelopment.swift */; };
 		F00CE951288EDD14005D36A9 /* SupportDevelopment.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00CE94F288EDD09005D36A9 /* SupportDevelopment.swift */; };
 		F00DE6BE27D7BC8E000AD591 /* Algorithms in Frameworks */ = {isa = PBXBuildFile; productRef = F00DE6BD27D7BC8E000AD591 /* Algorithms */; };
-		F00DE6C027D7BC93000AD591 /* Shiny in Frameworks */ = {isa = PBXBuildFile; productRef = F00DE6BF27D7BC93000AD591 /* Shiny */; };
 		F00DE6C427D7BCE9000AD591 /* SettingsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0E180B125236C3500E808AB /* SettingsScreen.swift */; };
 		F00DE6C627D7BCF1000AD591 /* Statistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = F05F75D92757BD4200CDD65C /* Statistics.swift */; };
 		F00DE6C727D7BD0F000AD591 /* HeartRateAssessment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CAEE28727323A4900184E39 /* HeartRateAssessment.swift */; };
@@ -68,7 +67,6 @@
 		F0457FBE2897477100A64DB3 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = F0457FBD2897477100A64DB3 /* README.md */; };
 		F04AD42C271CCDB600293641 /* SettingsScreenButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F04AD42B271CCDB600293641 /* SettingsScreenButton.swift */; };
 		F04AD42D271CCDB600293641 /* SettingsScreenButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F04AD42B271CCDB600293641 /* SettingsScreenButton.swift */; };
-		F04AD436271D17B600293641 /* Shiny in Frameworks */ = {isa = PBXBuildFile; productRef = F04AD435271D17B600293641 /* Shiny */; };
 		F05F75DA2757BD4200CDD65C /* Statistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = F05F75D92757BD4200CDD65C /* Statistics.swift */; };
 		F060BAC725214393009F9C81 /* HistoryScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = F060BAC625214393009F9C81 /* HistoryScreen.swift */; };
 		F060BAC825214393009F9C81 /* HistoryScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = F060BAC625214393009F9C81 /* HistoryScreen.swift */; };
@@ -225,7 +223,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				F0C71039275A6C19004928B2 /* Algorithms in Frameworks */,
-				F04AD436271D17B600293641 /* Shiny in Frameworks */,
 				F0DAFDA226B07A7E00CDA62F /* AuthenticationServices.framework in Frameworks */,
 				F0D553AD251C3A000084E0EB /* StoreKit.framework in Frameworks */,
 			);
@@ -235,7 +232,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F00DE6C027D7BC93000AD591 /* Shiny in Frameworks */,
 				F00DE6BE27D7BC8E000AD591 /* Algorithms in Frameworks */,
 				F0C75699251C3A4300D066A9 /* StoreKit.framework in Frameworks */,
 			);
@@ -513,7 +509,6 @@
 				F02DB3E7251C23440038FEAE /* Sources */,
 				F02DB3E8251C23440038FEAE /* Frameworks */,
 				F02DB3E9251C23440038FEAE /* Resources */,
-				F09871F426AB166700A05C49 /* Increment Build */,
 			);
 			buildRules = (
 			);
@@ -521,7 +516,6 @@
 			);
 			name = "Diadochokinetic Assess (iOS)";
 			packageProductDependencies = (
-				F04AD435271D17B600293641 /* Shiny */,
 				F0C71038275A6C19004928B2 /* Algorithms */,
 			);
 			productName = "Diadochokinetic Assess (iOS)";
@@ -544,7 +538,6 @@
 			name = "Diadochokinetic Assess (macOS)";
 			packageProductDependencies = (
 				F00DE6BD27D7BC8E000AD591 /* Algorithms */,
-				F00DE6BF27D7BC93000AD591 /* Shiny */,
 			);
 			productName = "Diadochokinetic Assess (macOS)";
 			productReference = F02DB3F3251C23440038FEAE /* Diadochokinetic Assess.app */;
@@ -592,8 +585,9 @@
 		F02DB3DF251C23430038FEAE /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1220;
-				LastUpgradeCheck = 1300;
+				LastUpgradeCheck = 1640;
 				TargetAttributes = {
 					F02DB3EA251C23440038FEAE = {
 						CreatedOnToolsVersion = 12.2;
@@ -621,7 +615,6 @@
 			);
 			mainGroup = F02DB3DE251C23430038FEAE;
 			packageReferences = (
-				F04AD434271D17B600293641 /* XCRemoteSwiftPackageReference "shiny" */,
 				F0C71037275A6C19004928B2 /* XCRemoteSwiftPackageReference "swift-algorithms" */,
 			);
 			productRefGroup = F02DB3EC251C23440038FEAE /* Products */;
@@ -677,24 +670,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		F09871F426AB166700A05C49 /* Increment Build */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Increment Build";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "buildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\")\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"\n";
-		};
 		F0FAC2FC27D9D224008685AC /* Increment Build */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -897,9 +872,12 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 896Q68CL7P;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -956,9 +934,12 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 896Q68CL7P;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -981,15 +962,17 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Diadochokinetic Assess (iOS).entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 896Q68CL7P;
+				CURRENT_PROJECT_VERSION = 2;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = iOS/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = DDK;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.medical";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.0;
+				MARKETING_VERSION = 2.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Ballygorey.Diadochokinetic-Assess";
 				PRODUCT_NAME = "Diadochokinetic Assess";
 				SDKROOT = iphoneos;
@@ -1005,15 +988,17 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Diadochokinetic Assess (iOS).entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 896Q68CL7P;
+				CURRENT_PROJECT_VERSION = 2;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = iOS/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = DDK;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.medical";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.0;
+				MARKETING_VERSION = 2.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Ballygorey.Diadochokinetic-Assess";
 				PRODUCT_NAME = "Diadochokinetic Assess";
 				SDKROOT = iphoneos;
@@ -1032,7 +1017,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = 896Q68CL7P;
+				DEAD_CODE_STRIPPING = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = macOS/Info.plist;
@@ -1058,7 +1043,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = 896Q68CL7P;
+				DEAD_CODE_STRIPPING = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = macOS/Info.plist;
@@ -1078,9 +1063,7 @@
 		F02DB41C251C23440038FEAE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 896Q68CL7P;
 				INFOPLIST_FILE = "Tests iOS/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1100,9 +1083,7 @@
 		F02DB41D251C23440038FEAE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 896Q68CL7P;
 				INFOPLIST_FILE = "Tests iOS/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1123,10 +1104,9 @@
 		F02DB41F251C23440038FEAE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = 896Q68CL7P;
+				DEAD_CODE_STRIPPING = YES;
 				INFOPLIST_FILE = "Tests macOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1145,10 +1125,9 @@
 		F02DB420251C23440038FEAE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = 896Q68CL7P;
+				DEAD_CODE_STRIPPING = YES;
 				INFOPLIST_FILE = "Tests macOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1215,14 +1194,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		F04AD434271D17B600293641 /* XCRemoteSwiftPackageReference "shiny" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/maustinstar/shiny.git";
-			requirement = {
-				branch = master;
-				kind = branch;
-			};
-		};
 		F0C71037275A6C19004928B2 /* XCRemoteSwiftPackageReference "swift-algorithms" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/apple/swift-algorithms.git";
@@ -1238,16 +1209,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F0C71037275A6C19004928B2 /* XCRemoteSwiftPackageReference "swift-algorithms" */;
 			productName = Algorithms;
-		};
-		F00DE6BF27D7BC93000AD591 /* Shiny */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = F04AD434271D17B600293641 /* XCRemoteSwiftPackageReference "shiny" */;
-			productName = Shiny;
-		};
-		F04AD435271D17B600293641 /* Shiny */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = F04AD434271D17B600293641 /* XCRemoteSwiftPackageReference "shiny" */;
-			productName = Shiny;
 		};
 		F0C71038275A6C19004928B2 /* Algorithms */ = {
 			isa = XCSwiftPackageProductDependency;

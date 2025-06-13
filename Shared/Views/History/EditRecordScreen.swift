@@ -10,15 +10,14 @@ import SwiftUI
 struct EditRecordScreen: View {
     
     @EnvironmentObject var model : DDKModel
-    
     @Environment(\.dismiss) var dismiss
-    
-    var record: AssessmentRecord
     
     @State private var draftRecord : AssessmentRecord = AssessmentRecord(date: .now, taps: 0, type: .timed, duration: 0)
     @State private var imported : Bool = false
     
     @State private var deleteConfirmationIsPresented : Bool = false
+
+    var record: AssessmentRecord
     
     init(_ record: AssessmentRecord) {
         self.record = record
@@ -72,6 +71,8 @@ struct EditRecordScreen: View {
                 .confirmationDialog("Are you sure?", isPresented: $deleteConfirmationIsPresented) {
                     Button(role: .destructive) {
                         model.deleteRecord(record)
+                        dismiss()
+                        
                     } label: {
                         Text("Delete the assessment")
                     }
@@ -184,5 +185,6 @@ struct EditRecordScreen: View {
 struct EditRecordScreen_Previews: PreviewProvider {
     static var previews: some View {
         EditRecordScreen(AssessmentRecord(date: Date(), taps: 7, type: .timed, duration: 15))
+            .previewLayout(.sizeThatFits)
     }
 }

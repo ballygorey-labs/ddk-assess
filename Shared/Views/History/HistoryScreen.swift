@@ -12,11 +12,16 @@ struct HistoryScreen: View {
     
     @EnvironmentObject var model : DDKModel
     
-    @AppStorage(StorageKeys.History.useGroups) var useGroups :              Bool = false
-    @AppStorage(StorageKeys.History.sortBy) var sortBy :                    RecordSortTypes = .pinned
+    @AppStorage(StorageKeys.History.useGroups) var useGroups: Bool = false
+    @AppStorage(StorageKeys.History.sortBy) var sortBy: RecordSortTypes = .pinned
     
-    @State private var recordEditSelection :        AssessmentRecord? = nil
-    @State private var showTrashConfirmationAlert : Bool = false
+    @State private var recordEditSelection: AssessmentRecord? = nil
+    
+    @State private var recordDeleteSelection: AssessmentRecord? = nil
+    @State private var showDeleteItemConfirmationAlert: Bool = false
+
+    @State private var showDeleteAllConfirmationAlert: Bool = false
+    
     
     // MARK: - Grouped Records
     // Sorts and labels sections of records appropriately.
@@ -38,15 +43,6 @@ struct HistoryScreen: View {
         case .date: // Group by Date
             
             let recordsByName = model.allRecords
-                .sorted(by: {
-                    $0.date.formatted(
-                        date: .numeric,
-                        time: .omitted
-                    ) > $1.date.formatted(
-                        date: .numeric,
-                        time: .omitted
-                    )
-                })
                 .chunked(by: {
                     $0.date.formatted(
                         date: .numeric,
@@ -141,7 +137,9 @@ struct HistoryScreen: View {
                     ForEach(records, id: \.id) { record in
                         RecordHistoryRow(
                             record: record,
-                            recordEditSelection: $recordEditSelection
+                            recordEditSelection: $recordEditSelection,
+                            recordDeleteSelection: $recordDeleteSelection,
+                            showDeleteItemConfirmationAlert: $showDeleteItemConfirmationAlert
                         )
                     }
                 }
@@ -150,7 +148,9 @@ struct HistoryScreen: View {
                     ForEach(records, id: \.id) { record in
                         RecordHistoryRow(
                             record: record,
-                            recordEditSelection: $recordEditSelection
+                            recordEditSelection: $recordEditSelection,
+                            recordDeleteSelection: $recordDeleteSelection,
+                            showDeleteItemConfirmationAlert: $showDeleteItemConfirmationAlert
                         )
                     }
                 }
@@ -161,13 +161,14 @@ struct HistoryScreen: View {
                 ForEach(records, id: \.id) { record in
                     RecordHistoryRow(
                         record: record,
-                        recordEditSelection: $recordEditSelection
+                        recordEditSelection: $recordEditSelection,
+                        recordDeleteSelection: $recordDeleteSelection,
+                        showDeleteItemConfirmationAlert: $showDeleteItemConfirmationAlert
                     )
                 }
             }
         }
     }
-    
     
     // MARK: - Body
     var body: some View {
@@ -177,71 +178,83 @@ struct HistoryScreen: View {
             } else {
                 emptyHistory
             }
-        }.navigationTitle("History")
+        }
+        .navigationTitle("History")
         
         // Optional List Style Modifier (Done b/c sidebar style takes over on iPadOS)
         #if os(iOS)
-            .listStyle(.insetGrouped)
+        .listStyle(.insetGrouped)
         #endif
-        
+    
         // Record Editor
-            .sheet(
-                item: $recordEditSelection,
-                onDismiss: { recordEditSelection = nil }
-            ) { record in
-                NavigationView { EditRecordScreen(record) }
-            }
-        
+        .sheet(
+            item: $recordEditSelection,
+            onDismiss: { recordEditSelection = nil }
+        ) { record in
+            NavigationView { EditRecordScreen(record) }
+        }
+    
         // Delete All Logs Confirmation Dialog
-            .confirmationDialog(
-                "Delete Logs",
-                isPresented: $showTrashConfirmationAlert,
-                actions: {
-                    Button("Cancel", role: .cancel) { }
-                    
-                    Button("Delete", role: .destructive) {
-                        model.records = []
-                    }
-                },
-                message: {
-                    Text("Are you sure you want to delete all logs?")
+        .confirmationDialog(
+            "Delete Logs",
+            isPresented: $showDeleteAllConfirmationAlert,
+            actions: {
+                Button("Cancel", role: .cancel) { }
+                
+                Button("Delete", role: .destructive) {
+                    model.records = []
+                    model.pinnedRecords = []
                 }
-            )
-        
-        // Toolbar Controls
-            .toolbar {
-                Menu {
+            },
+            message: {
+                Text("Are you sure you want to delete all logs?")
+            }
+        )
+    
+        // Delete a selected (pinned) assessment record
+        .confirmationDialog(
+            "Are you sure?",
+            isPresented: $showDeleteItemConfirmationAlert,
+            presenting: recordDeleteSelection,
+            actions: { record in
+                Button("Delete the assessment", role: .destructive) {
+                    model.deleteRecord(record)
+                    recordDeleteSelection = nil
+                    print("Deleting record", record.id.uuidString)
+                }
+            },
+            message: {_ in 
+                Text("This will permanetly delete this assessment record")
+            }
+        )
+    
+        .toolbar {
+            Menu {
+                Section {
+                    Toggle("Use Groups", isOn: $useGroups)
                     
-                    // TODO: Group / Sort Controls
-                    Section {
-                        
-                        Toggle("Use Groups", isOn: $useGroups)
-                        
-                        if useGroups {
-                            Menu {
-                                Picker("Group By", selection: $sortBy) {
-                                    ForEach(RecordSortTypes.allCases, id: \.self) {
-                                        Text($0.title).tag($0)
-                                    }
-                                }
-                            } label: {
-                                Label("Group By", systemImage: "arrow.up.arrow.down")
+                    if useGroups {
+                        Picker("Group By", selection: $sortBy) {
+                            ForEach(RecordSortTypes.allCases, id: \.self) {
+                                Text($0.title).tag($0)
                             }
                         }
                     }
-                    
-                    // Delete All Logs Button
-                    Section {
-                        Button(role: .destructive) {
-                            showTrashConfirmationAlert = true
-                        } label: {
-                            Label("Delete Logs", systemImage: "trash.fill")
-                        }
-                    }
-                } label: {
-                    Label("More", systemImage: "ellipsis.circle")
                 }
+                
+                
+                // Delete All Logs Button
+                Section {
+                    Button(role: .destructive) {
+                        showDeleteAllConfirmationAlert = true
+                    } label: {
+                        Label("Delete Logs", systemImage: "trash.fill")
+                    }
+                }
+            } label: {
+                Label("More", systemImage: "ellipsis.circle")
             }
+        }
     }
 }
 

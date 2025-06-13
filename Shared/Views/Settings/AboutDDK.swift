@@ -30,11 +30,11 @@ struct AboutDDK: View {
                 
                 // Description
                 VStack {
-                    Text("Made with love. ❤️")
-                        .font(.headline)
+                    Text("A simple, intuitive diagnostic tool that's designed by and built for Speech Language Pathologists (SLPs).")
                         .padding(.bottom, 4)
                     
-                    Text("DDK, an assessment utility tool, orignally was intended for Speech Language Pathologists, but has grown to serve a bigger purpose.")
+                    Text("Made with love. ❤️")
+                        .font(.headline)
                 }
                 .padding(.vertical)
                 
@@ -76,9 +76,13 @@ struct AboutDDK: View {
                         + Text("Kelly Lundis M.S. CCC-SLP")
                         
                     }.padding(.top)
+                    
+                    Text("&copy; 2025 Collin Dunphy")
+                        .foregroundColor(.secondary)
+                        .padding(.top)
+                    
                 }.padding(.vertical)
                 
-                // TODO: 3rd Party Packages
                 
                 
             }
